@@ -1,24 +1,35 @@
 import { useState } from 'react'
-import './App.css'
-import { SignedOut, SignedIn, SignIn, UserButton } from '@clerk/clerk-react';
+import { SignedOut, SignedIn, SignIn, UserButton, useUser } from '@clerk/clerk-react';
 import { getDailyStockData } from './services/alphaVantageService';
+import StockList from './components/StockList';
+import './App.css';
+
 
 function App() {
-  //const resp = getDailyStockData('AAPL');
-  //console.log(resp);//for testing
+  
+  const {user} = useUser()
 
   return (
-    <>
+    <div className="app-container">
       <header>
+        <h1>FinCheck.io</h1>
+        <h3>Check your stock performance with ease</h3>
+        </header>  
         <SignedOut>
+          <p> Login to manage your stocks.</p>
         <SignIn></SignIn>
       </SignedOut>
       <SignedIn>
-        <UserButton></UserButton>
+        {user ? (<>
+                <div className="user-header">
+                  <UserButton></UserButton>
+                </div>
+                <StockList userId={user.id} />
+              </>) 
+              : <p>Loading...</p>}
       </SignedIn>
-      </header>
-      
-    </>
+          
+    </div>
   )
 }
 
