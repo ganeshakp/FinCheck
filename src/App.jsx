@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 import { SignedOut, SignedIn, SignIn, UserButton } from '@clerk/clerk-react';
+import { getDailyStockData } from './services/alphaVantageService';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const resp = getDailyStockData('AAPL');
+  console.log(resp);//for testing
 
   return (
     <>
