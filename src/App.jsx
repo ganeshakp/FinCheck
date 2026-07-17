@@ -4,8 +4,8 @@ import { SignedOut, SignedIn, SignIn, UserButton } from '@clerk/clerk-react';
 import { getDailyStockData } from './services/alphaVantageService';
 
 function App() {
-  const resp = getDailyStockData('AAPL');
-  console.log(resp);//for testing
+  //const resp = getDailyStockData('AAPL');
+  //console.log(resp);//for testing
 
   return (
     <>

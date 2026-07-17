@@ -23,5 +23,20 @@ export async function getDailyStockData(symbol){
         function: 'TIME_SERIES_DAILY',
         symbol: symbol,
     });
-    return json;
+
+    const timeSeries = json['Time Series (Daily)'];
+    if(!timeSeries){
+        throw new Error(`No time series data found for symbol: ${symbol}`);
+    }
+    
+    const [latestDate, previousDate] = Object.keys(timeSeries);
+    if(!latestDate || !previousDate){
+        throw new Error(`Not enough data points for symbol: ${symbol}`);
+    }
+
+    const latestClose = parseFloat(timeSeries[latestDate]['4. close']);
+    const previousClose = parseFloat(timeSeries[previousDate]['4. close']);
+    const change = latestClose - previousClose;
+    const changePercent = ((change / previousClose) * 100).toFixed(2);
+    return changePercent;
 }
